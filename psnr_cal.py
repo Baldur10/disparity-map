@@ -10,8 +10,9 @@ def psnr(img1, img2):
     return 20 * math.log10(PIXEL_MAX / math.sqrt(mse))
 
 def test():
-    test_imgs = ["Art", "Dolls", "Reindeer"]    
-    
+    test_imgs = ["Art", "Dolls", "Reindeer"]
+
+    results = []
     for index in range(3):
         gt_names = "./gt/"+test_imgs[index]+"/disp1.png";
         gt_img = numpy.array(Image.open(gt_names),dtype=float);
@@ -30,8 +31,11 @@ def test():
         pred_img[gt_img==0]= 0
     
         peaksnr = psnr(pred_img,gt_img);
-        print('The Peak-SNR value is %0.4f \n', peaksnr);
+        result = round(peaksnr,4)
+        results.append(result)
+        print("The Peak-SNR value is {}".format(result));
 
+    return results
 
 
 if __name__== '__main__':
